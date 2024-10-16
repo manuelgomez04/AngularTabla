@@ -1,5 +1,6 @@
 
 import { Component } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 
 export interface PeriodicElement {
   numeroAlumno: number;
@@ -31,6 +32,20 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrl: './tabla.component.css',
 })
 export class TablaComponent {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
+
+  allColumns: string[] = ['numeroAlumno', 'nombre', 'apellidos', 'nif', 'edad', 'curso'];
+  displayedColumns: string[] = [...this.allColumns];
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
+
+  ocultarColumna(columna: string) {
+   const i = this.displayedColumns.indexOf(columna);
+
+   if ( i >= 0) {
+     this.displayedColumns.splice(i, 1);
+   } else {
+     this.displayedColumns.push(columna);
+     this.displayedColumns = this.allColumns.filter(c => this.displayedColumns.includes(c));
+   }
+  }
+
 }
