@@ -37,15 +37,18 @@ export class TablaComponent {
   displayedColumns: string[] = [...this.allColumns];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
-  ocultarColumna(columna: string) {
-   const i = this.displayedColumns.indexOf(columna);
+  setAll(columna: string, marcado: boolean) {
+    const i = this.displayedColumns.indexOf(columna);
+    if (marcado && i === -1) {
+      this.displayedColumns.push(columna);
 
-   if ( i >= 0) {
-     this.displayedColumns.splice(i, 1);
-   } else {
-     this.displayedColumns.push(columna);
-     this.displayedColumns = this.allColumns.filter(c => this.displayedColumns.includes(c));
-   }
+    } else if (!marcado && i !== -1) {
+      this.displayedColumns.splice(i, 1);
+    }
+
   }
-
 }
+
+
+
+
